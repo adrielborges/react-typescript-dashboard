@@ -1,46 +1,55 @@
-# Getting Started with Create React App
+# Projeto de Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  ## Introdução
+    O Projeto é um dashboard que contem um login simples e que consulta uma api, listando as informações para ser manipulado.
 
-## Available Scripts
+# Ferramentas utilizadas
 
-In the project directory, you can run:
+  ### React.Js
+     Biblioteca JavaScript para criar interfaces de usuário em páginas web.
+  ### Typescript
+    Linguagem usada para tipar o codigo para ajudar na manipulação das variaveis e dependencias.
+  ### EsLint
+    Utilizada para análisar o código para identificar padrões problemáticos encontrados no código JavaScript fazendo que o código esteja sempre obedecendo as regras de padrão impostas.
+  ### Prettier
+    Responsável por formatar o código de acordo com as regras do EsLint.
+  ### EditConfig
+    É um padronizador de editor de texto.
+  ### Styled-Components
+    Biblioteca que permite escrever códigos CSS dentro do JavaScript.
+  ### React-Router-Dom
+    Biblioteca usada para a navegação entre as  telas.
+  ### React-Icons
+    Biblioteca usada para os icones em svg.
+  ### Axios
+    Cliente HTTP utilizado para fazer as requisições Ajax.
+  ### Json-Server
+    Biblioteca que cria uma API fake apenas com dados JSON.
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Iniciando o Projeto
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Clone ou baixe o projeto para o seu computador
 
-### `yarn test`
+### `yarn start` ou `npm start` na pasta do projeto
+  Preferencial = 'yarn start'.
+  Necessário ter Node >= 8.10 e npm >= 5.6 na sua máquina.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  Com isso o projeto irá rodar em modo de desenvolvimento.
+  Para visualizar o projeto abra o [http://localhost:3000] dentro do seu browser.
 
-### `yarn build`
+### Emulando a API
+  Instale a biblioteca json-server(cole no seu terminal `npm install -g json-server`)
+  Tendo já instalado a biblioteca json-server.
+  Rode a api com o comando `json-server --watch server.json --port 3333` no seu terminal.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  As informações da api foram tiradas dos seguintes links :
+  https://desafioreact.s3.amazonaws.com/menu/menu.json
+  https://desafioreact.s3.amazonaws.com/menu/itens.json
+  pois o servidor não estava com a politica do CORS aceitando requisições localhost.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  # Usando a aplicação
+   A primeira página será um login.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+   As credenciais de acesso são:
+      'user' e '123', respectivamente.
