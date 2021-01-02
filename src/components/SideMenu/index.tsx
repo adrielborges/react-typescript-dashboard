@@ -5,24 +5,24 @@ import { useTasks } from '../../hooks/Tasks';
 
 import { Container, FavoriteWrap, TaskDetails } from './styles';
 
-interface Imenu {
+interface Menu {
   id: number;
   name: string;
-  subMenus: IsubMenus[];
+  subMenus: Submenus[];
 }
-interface IsubMenus {
+interface Submenus {
   id: number;
   name: string;
 }
 
 const SideMenu: React.FC = () => {
-  const [menu, setMenu] = useState<Imenu[]>([]);
-  const { handleFilterIdTask } = useTasks();
+  const [menus, setMenus] = useState<Menu[]>([]);
+  const { handleIdDefinitionOfSelectedSubtask } = useTasks();
 
   useEffect(() => {
-    (async function getMenu() {
+    (async function loadMenu() {
       const { data } = await api.get('/menus');
-      setMenu(data);
+      setMenus(data);
     })();
   }, []);
 
@@ -33,18 +33,20 @@ const SideMenu: React.FC = () => {
         <span>20</span>
       </FavoriteWrap>
 
-      {menu.map(item => (
-        <div key={item.id}>
+      {menus.map(menu => (
+        <div key={menu.id}>
           <TaskDetails>
             <summary>
-              <span>{item.name}</span>
-              <span>{item.subMenus.length}</span>
+              <span>{menu.name}</span>
+              <span>{menu.subMenus.length}</span>
             </summary>
-            {item.subMenus.map(subMenu => (
+            {menu.subMenus.map(subMenu => (
               <div key={subMenu.id}>
                 <button
                   type="button"
-                  onClick={() => handleFilterIdTask(subMenu.id)}
+                  onClick={() =>
+                    handleIdDefinitionOfSelectedSubtask(subMenu.id)
+                  }
                 >
                   {subMenu.name}
                 </button>

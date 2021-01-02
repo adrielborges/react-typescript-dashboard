@@ -7,62 +7,97 @@ import React, {
 } from 'react';
 import api from '../services/api';
 
-interface IItem {
+interface Task {
   id: number;
-  subMenuItems: [
-    {
-      id: string; // unicos em toda a aplicação
-      name: string;
-      subject: string;
-      owner: string;
-      users: string[];
-    },
-  ];
+  subMenuItems: {
+    id: string;
+    name: string;
+    subject: string;
+    owner: string;
+    users: string[];
+  }[];
 }
 
-interface IContext {
-  handleFilterIdTask(id: number): void;
-  tasks: IItem[];
-  stateFilteredTasks: IItem[];
-  handleDeleteSelectedTask(idItem: number, selectedTask: string[]): void;
+interface TaskContext {
+  handleIdDefinitionOfSelectedSubtask(subtaskId: number): void;
+  handleAddingIdForSelectedTasks(taskId: string): void;
+  handleDeletingSelectedTasks(subtaskId: number, tasksId: string[]): void;
+  tasks: Task[];
+  selectedTasksId: string[];
+  selectedSubtaskId: number;
 }
 
-export const TaskContext = createContext({} as IContext);
+export const TaskContext = createContext({} as TaskContext);
 
 export const TaskProvider: React.FC = ({ children }) => {
-  const [tasks, setTasks] = useState<IItem[]>([]);
-  const [stateFilteredTasks, setStateFilteredTasks] = useState<IItem[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [selectedSubtaskId, setSelectedSubtaskId] = useState(0);
+  const [selectedTasksId, setSelectedTasksId] = useState<string[]>([]);
 
   useEffect(() => {
-    (async function loadTasks() {
+    (async function loadTask() {
       const { data } = await api.get('/items');
 
       setTasks(data);
     })();
   }, []);
 
-  const handleFilterIdTask = useCallback(
-    (id: number) => {
-      const filteredTasks = tasks.filter(task => task.id === id);
-
-      setStateFilteredTasks(filteredTasks);
+  const handleIdDefinitionOfSelectedSubtask = useCallback(
+    (subtaskId: number) => {
+      setSelectedSubtaskId(subtaskId);
+      setSelectedTasksId([]);
     },
-    [tasks],
+    [],
   );
 
-  const handleDeleteSelectedTask = useCallback(
-    (idItem: number, selectedTask: string[]) => {
-      const copyStateTask = tasks;
-      const findItemIndex = copyStateTask.findIndex(item => item.id === idItem);
+  const handleAddingIdForSelectedTasks = useCallback(
+    (taskId: string) => {
+      const findTaskId = selectedTasksId.find(id => id === taskId);
 
-      if (findItemIndex >= 0) {
-        const { subMenuItems } = copyStateTask[findItemIndex];
-        const newSubMenuItems = selectedTask.reduce((accumulator, value) => {
-          return accumulator.filter(item => item.id !== value);
-        }, subMenuItems);
+      if (findTaskId) {
+        const newSelectedTaskId = selectedTasksId.filter(id => id !== taskId);
+        return setSelectedTasksId(newSelectedTaskId);
       }
 
-      // delete no database axios;
+      return setSelectedTasksId(selectedOldTasks => [
+        ...selectedOldTasks,
+        taskId,
+      ]);
+    },
+    [selectedTasksId],
+  );
+
+  const handleDeletingSelectedTasks = useCallback(
+    (subtaskId: number, tasksId: string[]) => {
+      const copyTasks = tasks;
+
+      const findSubtaskIndex = copyTasks.findIndex(
+        subtask => subtask.id === subtaskId,
+      );
+
+      const findSubtask = copyTasks.find(subtask => subtask.id === subtaskId);
+
+      if (findSubtaskIndex >= 0 && findSubtask) {
+        let { subMenuItems } = findSubtask;
+        const { id } = findSubtask;
+
+        tasksId.forEach(taskId => {
+          subMenuItems = subMenuItems.filter(task => task.id !== taskId);
+        });
+
+        const newTasks = copyTasks.fill(
+          {
+            id,
+            subMenuItems,
+          },
+          findSubtaskIndex,
+          findSubtaskIndex + 1,
+        );
+
+        setTasks(newTasks);
+
+        setSelectedTasksId([]);
+      }
     },
     [tasks],
   );
@@ -70,10 +105,12 @@ export const TaskProvider: React.FC = ({ children }) => {
   return (
     <TaskContext.Provider
       value={{
-        handleFilterIdTask,
         tasks,
-        stateFilteredTasks,
-        handleDeleteSelectedTask,
+        selectedTasksId,
+        selectedSubtaskId,
+        handleIdDefinitionOfSelectedSubtask,
+        handleAddingIdForSelectedTasks,
+        handleDeletingSelectedTasks,
       }}
     >
       {children}
@@ -81,11 +118,11 @@ export const TaskProvider: React.FC = ({ children }) => {
   );
 };
 
-export function useTasks(): IContext {
+export function useTasks(): TaskContext {
   const context = useContext(TaskContext);
 
   if (!context) {
-    throw new Error('useTasks must be used within an AuthProvider ');
+    throw new Error('useTasks must be used within an TaskProvider');
   }
 
   return context;

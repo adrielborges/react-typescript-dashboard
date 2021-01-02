@@ -4,7 +4,6 @@ import { HiMenu } from 'react-icons/hi';
 import { MdExitToApp } from 'react-icons/md';
 
 import { useHistory } from 'react-router-dom';
-import { stringify } from 'querystring';
 import { Nav, HelpMenu, ConfigMenu } from './styles';
 import { useAuth } from '../../hooks/Auth';
 
@@ -21,7 +20,6 @@ const NavBar: React.FC = () => {
   const handleChangeTheme = () => {
     const theme = Boolean(localStorage.getItem('@ReactDashboard:theme'));
     const changeValueTheme = !theme;
-    console.log(changeValueTheme);
 
     localStorage.setItem('@ReactDashboard:theme', changeValueTheme.toString());
   };

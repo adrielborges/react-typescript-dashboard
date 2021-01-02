@@ -13,69 +13,49 @@ import {
   ContainerIconWrapUsers,
 } from './styles';
 
-interface IItem {
-  id: number;
-  subMenus: IsubMenuItem[];
-}
-interface IsubMenuItem {
-  id: number;
-  name: string;
-  owner: string;
-  subject: string;
-  users: string[];
-}
-
 const ItemsSection: React.FC = () => {
-  const [isCheckedVisable, setIsCheckedVisable] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [taskSelected, setTaskSelected] = useState<string[]>([]);
+  const [isCheckboxVisible, setIsCheckboxVisible] = useState(false);
 
-  const { stateFilteredTasks } = useTasks();
+  const {
+    tasks,
+    selectedSubtaskId,
+    selectedTasksId,
+    handleAddingIdForSelectedTasks,
+  } = useTasks();
 
-  const handleIsChecked = () => {
-    setIsCheckedVisable(!isCheckedVisable);
-  };
-
-  const handleAddSelectedTasks = (id: string) => {
-    const findTaskId = taskSelected.find(task => task === id);
-    if (findTaskId) {
-      const newTaskId = taskSelected.filter(task => task !== id);
-      setTaskSelected(newTaskId);
-      return setIsChecked(true);
-    }
-    setTaskSelected(oldState => [...oldState, id]);
-    return setIsChecked(true);
-  };
+  const filteredTasks = tasks.filter(
+    subtask => subtask.id === selectedSubtaskId,
+  );
 
   return (
     <Container>
-      {stateFilteredTasks.map(task => (
-        <div key={task.id}>
-          {task.subMenuItems.map(item => (
-            <ContainerItem key={item.id}>
+      {filteredTasks.map(subtasks => (
+        <div key={subtasks.id}>
+          {subtasks.subMenuItems.map(task => (
+            <ContainerItem key={task.id}>
               <NameWrap>
                 <ContainerCheckIcon
-                  onMouseEnter={handleIsChecked}
-                  onMouseLeave={handleIsChecked}
+                  onMouseEnter={() => setIsCheckboxVisible(true)}
+                  onMouseLeave={() => setIsCheckboxVisible(false)}
                 >
-                  {(isCheckedVisable || isChecked) && (
+                  {(isCheckboxVisible || selectedTasksId.length !== 0) && (
                     <input
                       type="checkbox"
-                      onChange={() => handleAddSelectedTasks(item.id)}
+                      onChange={() => handleAddingIdForSelectedTasks(task.id)}
                     />
                   )}
-                  {!isChecked && !isCheckedVisable && (
-                    <IconNameWrap owner={item.owner} />
+                  {!isCheckboxVisible && selectedTasksId.length === 0 && (
+                    <IconNameWrap owner={task.owner} />
                   )}
                 </ContainerCheckIcon>
                 <div>
                   <span>
-                    <b>{item.name}</b>
+                    <b>{task.name}</b>
                   </span>
 
                   <span>
                     <RiChat4Fill />
-                    {item.subject}
+                    {task.subject}
                   </span>
 
                   <span>
@@ -89,8 +69,8 @@ const ItemsSection: React.FC = () => {
                 <span> hoje, 15:54 </span>
 
                 <ContainerIconWrapUsers>
-                  {item.users.map(user => (
-                    <IconNameWrap key={user} owner={item.owner} />
+                  {task.users.map(user => (
+                    <IconNameWrap key={user} owner={task.owner} />
                   ))}
                 </ContainerIconWrapUsers>
               </ContainerWrapItemsRigth>

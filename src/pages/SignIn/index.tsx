@@ -1,14 +1,14 @@
-import React, { useState, useContext, EventHandler, FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
 
 import { RiDashboardLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 import { Container } from './styles';
 import { useAuth } from '../../hooks/Auth';
 
-interface SignInFormData {
-  email: string;
-  password: string;
-}
+// interface SignInFormData {
+//   email: string;
+//   password: string;
+// }
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
