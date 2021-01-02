@@ -1,7 +1,7 @@
 # Projeto de Dashboard
 
   ## Introdução
-    O Projeto é um dashboard que contem um login simples e que consulta uma api, listando as informações para ser manipulado.
+  O Projeto é um dashboard que contem um login simples e que consulta uma api, listando as informações para ser manipulado.
 
 # Ferramentas utilizadas
 
@@ -10,7 +10,7 @@
   ### Typescript
     Linguagem usada para tipar o codigo para ajudar na manipulação das variaveis e dependencias.
   ### EsLint
-    Utilizada para análisar o código para identificar padrões problemáticos encontrados no código JavaScript fazendo que o código esteja sempre obedecendo as regras de padrão impostas.
+  Utilizada para análisar o código para identificar padrões problemáticos encontrados no código JavaScript fazendo que o código esteja sempre obedecendo as regras de padrão impostas.
   ### Prettier
     Responsável por formatar o código de acordo com as regras do EsLint.
   ### EditConfig
@@ -39,7 +39,9 @@
   Para visualizar o projeto abra o [http://localhost:3000] dentro do seu browser.
 
 ### Emulando a API
-  Instale a biblioteca json-server(cole no seu terminal `npm install -g json-server`)
+  dependencia do projeto: json-server
+  Instale a biblioteca json-server(cole no seu terminal `npm install -g json-server`).
+
   Tendo já instalado a biblioteca json-server.
   Rode a api com o comando `json-server --watch server.json --port 3333` no seu terminal.
 
@@ -49,7 +51,7 @@
   pois o servidor não estava com a politica do CORS aceitando requisições localhost.
 
   # Usando a aplicação
-   A primeira página será um login.
+  A primeira página será um login.
 
-   As credenciais de acesso são:
-      'user' e '123', respectivamente.
+  As credenciais de acesso são:
+    'user' e '123', respectivamente.

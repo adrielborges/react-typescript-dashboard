@@ -11,7 +11,7 @@ interface IItem {
   id: number;
   subMenuItems: [
     {
-      id: string;
+      id: string; // unicos em toda a aplicação
       name: string;
       subject: string;
       owner: string;
@@ -24,6 +24,7 @@ interface IContext {
   handleFilterIdTask(id: number): void;
   tasks: IItem[];
   stateFilteredTasks: IItem[];
+  handleDeleteSelectedTask(idItem: number, selectedTask: string[]): void;
 }
 
 export const TaskContext = createContext({} as IContext);
@@ -49,18 +50,31 @@ export const TaskProvider: React.FC = ({ children }) => {
     [tasks],
   );
 
-  const handleDeleteSelectedTask = useCallback((selectedTask: string[]) => {
-    const submenuItems = tasks.map(task=>task.subMenuItems);
+  const handleDeleteSelectedTask = useCallback(
+    (idItem: number, selectedTask: string[]) => {
+      const copyStateTask = tasks;
+      const findItemIndex = copyStateTask.findIndex(item => item.id === idItem);
 
-    selectedTask.forEach(taskId=>{
-      submenuItems.filter(item=>item.id
-    });
-  },
-  []);
+      if (findItemIndex >= 0) {
+        const { subMenuItems } = copyStateTask[findItemIndex];
+        const newSubMenuItems = selectedTask.reduce((accumulator, value) => {
+          return accumulator.filter(item => item.id !== value);
+        }, subMenuItems);
+      }
+
+      // delete no database axios;
+    },
+    [tasks],
+  );
 
   return (
     <TaskContext.Provider
-      value={{ handleFilterIdTask, tasks, stateFilteredTasks }}
+      value={{
+        handleFilterIdTask,
+        tasks,
+        stateFilteredTasks,
+        handleDeleteSelectedTask,
+      }}
     >
       {children}
     </TaskContext.Provider>
