@@ -44,8 +44,8 @@
   Rode a api com o comando `json-server --watch server.json --port 3333` no seu terminal.
 
   As informações da api foram tiradas dos seguintes links :
-  https://desafioreact.s3.amazonaws.com/menu/menu.json
-  https://desafioreact.s3.amazonaws.com/menu/itens.json
+ ...
+ ...
   pois o servidor não estava com a politica do CORS aceitando requisições localhost.
 
   # Usando a aplicação
