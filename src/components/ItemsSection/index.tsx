@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { RiArrowRightSFill, RiChat4Fill } from 'react-icons/ri';
-import { useTasks, Task } from '../../hooks/Tasks';
+import { useTasks } from '../../hooks/Tasks';
 import IconNameWrap from '../IconNameWrap';
 
 import {
