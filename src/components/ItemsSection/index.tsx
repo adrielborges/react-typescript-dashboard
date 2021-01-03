@@ -69,7 +69,7 @@ const ItemsSection: React.FC = () => {
 
                   <ContainerIconWrapUsers>
                     {task.users.map(user => (
-                      <IconNameWrap key={user} owner={task.owner} />
+                      <IconNameWrap key={user} owner={user} />
                     ))}
                   </ContainerIconWrapUsers>
                 </ContainerWrapItemsRigth>
