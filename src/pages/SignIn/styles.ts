@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import theme from '../../styles/themes/theme';
 
 export const Container = styled.div`
   height: 100vh;
@@ -14,7 +13,7 @@ export const Container = styled.div`
     width: 250px;
     height: 250px;
 
-    color: ${theme.colors.button_Background};
+    color: ${props => props.theme.colors.button_Background};
   }
 
   form {
@@ -40,8 +39,8 @@ export const Container = styled.div`
       margin-top: 15px;
       border-radius: 5px;
 
-      color: ${theme.colors.button_text};
-      background: ${theme.colors.button_Background};
+      color: ${props => props.theme.colors.button_text};
+      background: ${props => props.theme.colors.button_Background};
     }
   }
 `;

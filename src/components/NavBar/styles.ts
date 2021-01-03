@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import theme from '../../styles/themes/theme';
 
 export const Nav = styled.nav`
   display: flex;
@@ -9,8 +8,8 @@ export const Nav = styled.nav`
   width: 100%;
   height: 50px;
 
-  color: ${theme.colors.button_text};
-  background-color: ${theme.colors.button_Background};
+  color: ${props => props.theme.colors.button_text};
+  background-color: ${props => props.theme.colors.button_Background};
 
   padding: 0 15px;
 
@@ -29,8 +28,8 @@ export const Nav = styled.nav`
       height: 25px;
       border: none;
 
-      background: ${theme.colors.button_Background};
-      color: ${theme.colors.button_text};
+      background: ${props => props.theme.colors.button_Background};
+      color: ${props => props.theme.colors.button_text};
     }
     button:first-of-type {
       margin-right: 20px;
@@ -50,8 +49,8 @@ export const HelpMenu = styled.div`
   margin-right: 96px;
   padding: 2px 10px 3px 10px;
 
-  color: ${theme.colors.button_text};
-  background: ${theme.colors.button_Background};
+  color: ${props => props.theme.colors.button_text};
+  background: ${props => props.theme.colors.button_Background};
 
   ul {
     list-style: none;
@@ -63,8 +62,8 @@ export const HelpMenu = styled.div`
         text-decoration: none;
         border: none;
 
-        background: ${theme.colors.button_Background};
-        color: ${theme.colors.button_text};
+        background: ${props => props.theme.colors.button_Background};
+        color: ${props => props.theme.colors.button_text};
       }
     }
   }
@@ -78,12 +77,12 @@ export const ConfigMenu = styled.div`
   justify-content: center;
   align-items: center;
 
-  margin-top: 135px;
+  margin-top: 120px;
   margin-right: -60px;
   padding: 2px 10px 3px 10px;
 
-  color: ${theme.colors.button_text};
-  background: ${theme.colors.button_Background};
+  color: ${props => props.theme.colors.button_text};
+  background: ${props => props.theme.colors.button_Background};
 
   ul {
     list-style: none;
@@ -95,8 +94,8 @@ export const ConfigMenu = styled.div`
         text-decoration: none;
         border: none;
 
-        background: ${theme.colors.button_Background};
-        color: ${theme.colors.button_text};
+        background: ${props => props.theme.colors.button_Background};
+        color: ${props => props.theme.colors.button_text};
       }
     }
   }

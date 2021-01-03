@@ -8,6 +8,7 @@ export const ContainerItem = styled.div`
   align-items: center;
 
   padding: 10px;
+  margin-bottom: 10px;
   border-radius: 8px;
 
   width: 100%;

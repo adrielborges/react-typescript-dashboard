@@ -1,9 +1,15 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
-
-// import { Container } from './styles';
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
+import { sign } from 'jsonwebtoken';
 
 interface IuserState {
-  user: Icredentials;
+  name: string;
+  token: string;
 }
 
 interface Icredentials {
@@ -12,41 +18,44 @@ interface Icredentials {
 }
 
 interface IauthContext {
-  user: object;
-  signIn(credentials: Icredentials): Promise<void>;
+  user: IuserState;
+  signIn(credentials: Icredentials): void;
   signOut(): void;
 }
 
 export const AuthContext = createContext({} as IauthContext);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState(() => {
+  const [data, setData] = useState<IuserState>({} as IuserState);
+
+  useEffect(() => {
     const user = localStorage.getItem('@ReactDashboard:user');
     if (user) {
-      return { user: JSON.parse(user) };
+      setData(JSON.parse(user));
     }
-    return {} as IuserState;
-  });
+  }, []);
 
-  const signIn = useCallback(async ({ name, password }: Icredentials) => {
-    const { login, loginPassword } = { login: 'user', loginPassword: '123' }; // axios
-
-    const user = { name, password };
+  const signIn = useCallback(({ name, password }: Icredentials) => {
+    const { login, loginPassword } = { login: 'user', loginPassword: '123' };
 
     if (login === name && password === loginPassword) {
+      const token = sign({}, 'fgjuhohdsjuhofdgjafdgjuhofgajohafgs', {
+        expiresIn: '1d',
+      });
+      const user = { name, token };
       localStorage.setItem('@ReactDashboard:user', JSON.stringify(user));
-      return setData({ user });
+      return setData(user);
     }
     throw new Error('You do not have permition');
   }, []);
 
-  const signOut = useCallback(async () => {
+  const signOut = useCallback(() => {
     localStorage.removeItem('@ReactDashboard:user');
     setData({} as IuserState);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

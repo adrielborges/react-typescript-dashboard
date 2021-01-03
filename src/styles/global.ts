@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import theme from './themes/theme';
 
 export default createGlobalStyle`
   * {
@@ -10,8 +9,8 @@ export default createGlobalStyle`
   }
 
   body {
-    background: ${theme.colors.background};
-    color: ${theme.colors.text};
+    background: ${props => props.theme.colors.background};
+    color: ${props => props.theme.colors.text};
     -webkit-font-smoothing: antialiased;
   }
 
@@ -31,7 +30,7 @@ export default createGlobalStyle`
     transition: color 500ms ease-out;
 
     :hover {
-      color: ${theme.colors.text};
+      color: ${props => props.theme.colors.text};
       opacity:0.8;
     }
   }

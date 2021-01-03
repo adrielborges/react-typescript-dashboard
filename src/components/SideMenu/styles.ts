@@ -33,6 +33,8 @@ export const TaskDetails = styled.details`
     padding-left: 70px;
     padding-top: 25px;
     button {
+      color: ${props => props.theme.colors.text};
+      background: transparent;
       text-decoration: none;
       border: none;
     }

@@ -11,9 +11,8 @@ const App: React.FC = () => {
     <Router>
       <AppContext>
         <Routes />
+        <GlobalStyle />
       </AppContext>
-
-      <GlobalStyle />
     </Router>
   );
 };

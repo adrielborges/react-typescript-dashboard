@@ -6,22 +6,18 @@ import { MdExitToApp } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { Nav, HelpMenu, ConfigMenu } from './styles';
 import { useAuth } from '../../hooks/Auth';
+import { useTheme } from '../../hooks/Theme';
 
 const NavBar: React.FC = () => {
   const [hiddenHelp, setHiddenHelp] = useState(false);
   const [hiddenConfig, setHiddenConfig] = useState(false);
   const { signOut } = useAuth();
   const history = useHistory();
+  const { toggleTheme } = useTheme();
 
   const handleSingOut = () => {
     signOut();
     history.push('/');
-  };
-  const handleChangeTheme = () => {
-    const theme = Boolean(localStorage.getItem('@ReactDashboard:theme'));
-    const changeValueTheme = !theme;
-
-    localStorage.setItem('@ReactDashboard:theme', changeValueTheme.toString());
   };
 
   return (
@@ -56,13 +52,8 @@ const NavBar: React.FC = () => {
           <ConfigMenu>
             <ul>
               <li>
-                <button type="button" onClick={() => handleChangeTheme()}>
-                  Tema Dark
-                </button>
-              </li>
-              <li>
-                <button type="button" onClick={() => handleChangeTheme()}>
-                  Tema Light
+                <button type="button" onClick={() => toggleTheme()}>
+                  Mudar Tema
                 </button>
               </li>
               <li>
