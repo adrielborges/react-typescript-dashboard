@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { RiArrowRightSFill, RiChat4Fill } from 'react-icons/ri';
-import { useTasks } from '../../hooks/Tasks';
+import { useTasks, Task } from '../../hooks/Tasks';
 import IconNameWrap from '../IconNameWrap';
 
 import {
@@ -41,6 +41,7 @@ const ItemsSection: React.FC = () => {
                   {(isCheckboxVisible || selectedTasksId.length !== 0) && (
                     <input
                       type="checkbox"
+                      checked={selectedTasksId.includes(task.id)}
                       onChange={() => handleAddingIdForSelectedTasks(task.id)}
                     />
                   )}

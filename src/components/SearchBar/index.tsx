@@ -16,6 +16,8 @@ const SearchBar: React.FC = () => {
     selectedSubtaskId,
     selectedTasksId,
     handleDeletingSelectedTasks,
+    handleSelectAll,
+    allSelectedTasks,
   } = useTasks();
 
   return (
@@ -24,7 +26,12 @@ const SearchBar: React.FC = () => {
 
       <FilterContainer>
         <FilterButtonWrap>
-          <FilterInput type="checkbox" name="checkbox" />
+          <FilterInput
+            type="checkbox"
+            name="checkbox"
+            checked={allSelectedTasks}
+            onChange={() => handleSelectAll()}
+          />
           <FilterButton type="button"> ATRIBUIR </FilterButton>
           <FilterButton
             type="button"

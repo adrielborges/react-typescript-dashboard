@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import api from '../services/api';
 
-interface Task {
+export interface Task {
   id: number;
   subMenuItems: {
     id: string;
@@ -22,9 +22,11 @@ interface TaskContext {
   handleIdDefinitionOfSelectedSubtask(subtaskId: number): void;
   handleAddingIdForSelectedTasks(taskId: string): void;
   handleDeletingSelectedTasks(subtaskId: number, tasksId: string[]): void;
+  handleSelectAll(): void;
   tasks: Task[];
   selectedTasksId: string[];
   selectedSubtaskId: number;
+  allSelectedTasks: boolean;
 }
 
 export const TaskContext = createContext({} as TaskContext);
@@ -33,6 +35,7 @@ export const TaskProvider: React.FC = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedSubtaskId, setSelectedSubtaskId] = useState(0);
   const [selectedTasksId, setSelectedTasksId] = useState<string[]>([]);
+  const [allSelectedTasks, setAllSelectedTasks] = useState(false);
 
   useEffect(() => {
     (async function loadTask() {
@@ -53,6 +56,7 @@ export const TaskProvider: React.FC = ({ children }) => {
   const handleAddingIdForSelectedTasks = useCallback(
     (taskId: string) => {
       const findTaskId = selectedTasksId.find(id => id === taskId);
+      setAllSelectedTasks(false);
 
       if (findTaskId) {
         const newSelectedTaskId = selectedTasksId.filter(id => id !== taskId);
@@ -67,9 +71,22 @@ export const TaskProvider: React.FC = ({ children }) => {
     [selectedTasksId],
   );
 
-  // const handleSelectAll = useCallback(() => {
+  const handleSelectAll = useCallback(() => {
+    if (allSelectedTasks) {
+      setAllSelectedTasks(false);
+      return setSelectedTasksId([]);
+    }
 
-  // }, []);
+    const filteredTasks = tasks.filter(
+      subtask => subtask.id === selectedSubtaskId,
+    );
+
+    const subTaskItemId = filteredTasks.map(id =>
+      id.subMenuItems.map(allSubMenuId => allSubMenuId.id),
+    );
+    setAllSelectedTasks(true);
+    return setSelectedTasksId(subTaskItemId[0]);
+  }, [tasks, selectedSubtaskId, allSelectedTasks]);
 
   const handleDeletingSelectedTasks = useCallback(
     (subtaskId: number, tasksId: string[]) => {
@@ -115,6 +132,8 @@ export const TaskProvider: React.FC = ({ children }) => {
         handleIdDefinitionOfSelectedSubtask,
         handleAddingIdForSelectedTasks,
         handleDeletingSelectedTasks,
+        handleSelectAll,
+        allSelectedTasks,
       }}
     >
       {children}
