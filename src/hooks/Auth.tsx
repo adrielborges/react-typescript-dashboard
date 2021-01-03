@@ -39,7 +39,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     const { login, loginPassword } = { login: 'user', loginPassword: '123' };
 
     if (login === name && password === loginPassword) {
-      const token = sign({}, 'fgjuhohdsjuhofdgjafdgjuhofgajohafgs', {
+      const token = sign({}, `${process.env.REACT_APP_JWT}`, {
         expiresIn: '1d',
       });
       const user = { name, token };

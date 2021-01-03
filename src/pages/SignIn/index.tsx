@@ -24,10 +24,10 @@ const SignIn: React.FC = () => {
     e.preventDefault();
 
     try {
-      await signIn({ name, password: loginPassword });
+      signIn({ name, password: loginPassword });
       history.push('/dashboard');
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
   return (
