@@ -67,6 +67,10 @@ export const TaskProvider: React.FC = ({ children }) => {
     [selectedTasksId],
   );
 
+  // const handleSelectAll = useCallback(() => {
+
+  // }, []);
+
   const handleDeletingSelectedTasks = useCallback(
     (subtaskId: number, tasksId: string[]) => {
       const copyTasks = tasks;
