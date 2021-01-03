@@ -17,7 +17,7 @@ const SearchBar: React.FC = () => {
     selectedTasksId,
     handleDeletingSelectedTasks,
     handleSelectAll,
-    allSelectedTasks,
+    totalTasks,
   } = useTasks();
 
   return (
@@ -29,7 +29,9 @@ const SearchBar: React.FC = () => {
           <FilterInput
             type="checkbox"
             name="checkbox"
-            checked={allSelectedTasks}
+            checked={
+              totalTasks === 0 ? false : totalTasks === selectedTasksId.length
+            }
             onChange={() => handleSelectAll()}
           />
           <FilterButton type="button"> ATRIBUIR </FilterButton>

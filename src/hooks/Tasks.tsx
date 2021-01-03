@@ -27,6 +27,7 @@ interface TaskContext {
   selectedTasksId: string[];
   selectedSubtaskId: number;
   allSelectedTasks: boolean;
+  totalTasks: number;
 }
 
 export const TaskContext = createContext({} as TaskContext);
@@ -36,6 +37,7 @@ export const TaskProvider: React.FC = ({ children }) => {
   const [selectedSubtaskId, setSelectedSubtaskId] = useState(0);
   const [selectedTasksId, setSelectedTasksId] = useState<string[]>([]);
   const [allSelectedTasks, setAllSelectedTasks] = useState(false);
+  const [totalTasks, setTotalTasks] = useState(0);
 
   useEffect(() => {
     (async function loadTask() {
@@ -44,6 +46,23 @@ export const TaskProvider: React.FC = ({ children }) => {
       setTasks(data);
     })();
   }, []);
+
+  const handleTotalTasks = useCallback(
+    (allTasks: Task[], subtaskId: number): number => {
+      const filtered = allTasks.filter(subtask => subtask.id === subtaskId);
+
+      const total = filtered.reduce((accumulator, value) => {
+        return value.subMenuItems.length;
+      }, 0);
+
+      return total;
+    },
+    [],
+  );
+
+  useEffect(() => {
+    setTotalTasks(handleTotalTasks(tasks, selectedSubtaskId));
+  }, [selectedSubtaskId, tasks, handleTotalTasks]);
 
   const handleIdDefinitionOfSelectedSubtask = useCallback(
     (subtaskId: number) => {
@@ -116,11 +135,12 @@ export const TaskProvider: React.FC = ({ children }) => {
         );
 
         setTasks(newTasks);
-
         setSelectedTasksId([]);
+
+        setTotalTasks(handleTotalTasks(tasks, selectedSubtaskId));
       }
     },
-    [tasks],
+    [tasks, selectedSubtaskId, handleTotalTasks],
   );
 
   return (
@@ -134,6 +154,7 @@ export const TaskProvider: React.FC = ({ children }) => {
         handleDeletingSelectedTasks,
         handleSelectAll,
         allSelectedTasks,
+        totalTasks,
       }}
     >
       {children}

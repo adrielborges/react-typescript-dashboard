@@ -23,62 +23,60 @@ const ItemsSection: React.FC = () => {
     handleAddingIdForSelectedTasks,
   } = useTasks();
 
-  const filteredTasks = tasks.filter(
-    subtask => subtask.id === selectedSubtaskId,
-  );
-
   return (
     <Container>
-      {filteredTasks.map(subtasks => (
-        <div key={subtasks.id}>
-          {subtasks.subMenuItems.map(task => (
-            <ContainerItem key={task.id}>
-              <NameWrap>
-                <ContainerCheckIcon
-                  onMouseEnter={() => setIsCheckboxVisible(true)}
-                  onMouseLeave={() => setIsCheckboxVisible(false)}
-                >
-                  {(isCheckboxVisible || selectedTasksId.length !== 0) && (
-                    <input
-                      type="checkbox"
-                      checked={selectedTasksId.includes(task.id)}
-                      onChange={() => handleAddingIdForSelectedTasks(task.id)}
-                    />
-                  )}
-                  {!isCheckboxVisible && selectedTasksId.length === 0 && (
-                    <IconNameWrap owner={task.owner} />
-                  )}
-                </ContainerCheckIcon>
-                <div>
-                  <span>
-                    <b>{task.name}</b>
-                  </span>
+      {tasks
+        .filter(subtask => subtask.id === selectedSubtaskId)
+        .map(subtasks => (
+          <div key={subtasks.id}>
+            {subtasks.subMenuItems.map(task => (
+              <ContainerItem key={task.id}>
+                <NameWrap>
+                  <ContainerCheckIcon
+                    onMouseEnter={() => setIsCheckboxVisible(true)}
+                    onMouseLeave={() => setIsCheckboxVisible(false)}
+                  >
+                    {(isCheckboxVisible || selectedTasksId.length !== 0) && (
+                      <input
+                        type="checkbox"
+                        checked={selectedTasksId.includes(task.id)}
+                        onChange={() => handleAddingIdForSelectedTasks(task.id)}
+                      />
+                    )}
+                    {!isCheckboxVisible && selectedTasksId.length === 0 && (
+                      <IconNameWrap owner={task.owner} />
+                    )}
+                  </ContainerCheckIcon>
+                  <div>
+                    <span>
+                      <b>{task.name}</b>
+                    </span>
 
-                  <span>
-                    <RiChat4Fill />
-                    {task.subject}
-                  </span>
+                    <span>
+                      <RiChat4Fill />
+                      {task.subject}
+                    </span>
 
-                  <span>
-                    <RiArrowRightSFill size={25} />
-                    Tarefa 1
-                  </span>
-                </div>
-              </NameWrap>
+                    <span>
+                      <RiArrowRightSFill size={25} />
+                      Tarefa 1
+                    </span>
+                  </div>
+                </NameWrap>
 
-              <ContainerWrapItemsRigth>
-                <span> hoje, 15:54 </span>
+                <ContainerWrapItemsRigth>
+                  <span> hoje, 15:54 </span>
 
-                <ContainerIconWrapUsers>
-                  {task.users.map(user => (
-                    <IconNameWrap key={user} owner={task.owner} />
-                  ))}
-                </ContainerIconWrapUsers>
-              </ContainerWrapItemsRigth>
-            </ContainerItem>
-          ))}
-        </div>
-      ))}
+                  <ContainerIconWrapUsers>
+                    {task.users.map(user => (
+                      <IconNameWrap key={user} owner={task.owner} />
+                    ))}
+                  </ContainerIconWrapUsers>
+                </ContainerWrapItemsRigth>
+              </ContainerItem>
+            ))}
+          </div>
+        ))}
     </Container>
   );
 };
