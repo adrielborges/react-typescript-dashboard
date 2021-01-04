@@ -14,7 +14,7 @@ export const ContainerItem = styled.div`
   width: 100%;
   height: 120px;
 
-  background: #ffffff;
+  background: ${props => props.theme.colors.background_item};
 `;
 export const NameWrap = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ export const NameWrap = styled.div`
     margin-left: 10px;
 
     span {
-      color: #808080;
+      color: ${props => props.theme.colors.text};
       svg {
         padding-top: 5px;
         height: 20px;
